@@ -1,0 +1,2 @@
+class VesselVisit < ApplicationRecord
+end
