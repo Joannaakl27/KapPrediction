@@ -130,6 +130,7 @@ class VesselVisitsController < ApplicationController
   def destroy
     @vessel_visit = VesselVisit.find(params[:id])
     @vessel_visit.destroy
+    redirect_to vessel_visits_path
   end
 
   private
