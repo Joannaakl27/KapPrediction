@@ -1,0 +1,58 @@
+<div class="container my-5">
+  <div class="shadow-4 rounded-5 overflow-hidden">
+    <div class="row">
+      <div class="col-lg-4 mb-4">
+        <%= form_tag vessel_visits_path, method: :get, class: "d-flex justify-content-between" do %>
+            <%= text_field_tag :query,
+                params[:query],
+                class: "form-control",
+                placeholder: "Search for a Voyage ID",
+                label: "Voyage Number:"
+            %>
+          <div class ="ml-2">
+            <%= button_tag(type: "submit", class: "btn btn-primary") do %>
+              <i class="fas fa-sm fa-search"></i>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="row p-2">
+      <table class="col-lg-10 table align-middle mb-0 bg-white">
+        <thead class="bg-light">
+          <tr>
+            <th>Voyage ID</th>
+            <th>Service</th>
+            <th>Vessel Length</th>
+            <th>Total Container Moves</th>
+            <th>Discharge Ratio</th>
+            <th>Crane Intensity</th>
+            <th>Berth Occupancy</th>
+            <th>Yard Occupancy</th>
+            <th>Cargo Ops. Time</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @vessel_visits.each do |vessel_visit| %>
+            <tr>
+              <td><%= vessel_visit.voyage_number %></td>
+              <td><%= vessel_visit.service_id %></td>
+              <td><%= vessel_visit.vessel_length %></td>
+              <td><%= vessel_visit.total_container_moves %></td>
+              <td><%= vessel_visit.discharge_container_move_ratio %></td>
+              <td><%= vessel_visit.crane_intensity %></td>
+              <td><%= vessel_visit.berth_occupancy %></td>
+              <td><%= vessel_visit.yard_occupancy %></td>
+              <td><%= vessel_visit.estimated_cargo_operating_time%></td>
+              <td>
+                <%= link_to "Edit", edit_vessel_visit_path(vessel_visit) %>
+                <%= link_to "Delete", vessel_visit_path(vessel_visit), method: :delete, data: {confirm: "Are you sure?"} %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
