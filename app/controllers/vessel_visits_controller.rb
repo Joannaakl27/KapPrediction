@@ -49,9 +49,9 @@ class VesselVisitsController < ApplicationController
               "TotalContainerMoveCount": vessel_visit_params[:total_container_moves].to_i,
               "DischargeContainerMoveCount": 0,
               "LoadContainerMoveCount": 0,
-              "DischargeContainerMoveRatio": vessel_visit_params[:discharge_container_move_ratio].to_f,
-              "BerthOccupancy": vessel_visit_params[:berth_occupancy].to_f,
-              "YardOccupancy": vessel_visit_params[:yard_occupancy].to_f,
+              "DischargeContainerMoveRatio": vessel_visit_params[:discharge_container_move_ratio].to_f/vessel_visit_params[:total_container_moves].to_f,
+              "BerthOccupancy": vessel_visit_params[:berth_occupancy].to_f / 100,
+              "YardOccupancy": vessel_visit_params[:yard_occupancy].to_f / 100,
               "CallSize": "example_value"
             }
           ]
@@ -108,9 +108,9 @@ class VesselVisitsController < ApplicationController
               "TotalContainerMoveCount": vessel_visit_params[:total_container_moves].to_i,
               "DischargeContainerMoveCount": 0,
               "LoadContainerMoveCount": 0,
-              "DischargeContainerMoveRatio": vessel_visit_params[:discharge_container_move_ratio].to_f,
-              "BerthOccupancy": vessel_visit_params[:berth_occupancy].to_f,
-              "YardOccupancy": vessel_visit_params[:yard_occupancy].to_f,
+              "DischargeContainerMoveRatio": vessel_visit_params[:discharge_container_move_ratio].to_f/vessel_visit_params[:total_container_moves].to_f,
+              "BerthOccupancy": vessel_visit_params[:berth_occupancy].to_f / 100,
+              "YardOccupancy": vessel_visit_params[:yard_occupancy].to_f / 100,
               "CallSize": "example_value"
             }
           ]

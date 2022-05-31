@@ -15,24 +15,24 @@
                 <%= f.label :voyage_number, 'Voyage Number:' %>
                 <%= f.text_field :voyage_number, as: :string, html5: true, label: 'Voyage Number', class: 'form-control mb-1', placeholder: 'Voyage Number' %>
                 <%= f.label :service_id, 'Service ID:' %>
-                <%= f.text_field :service_id, as: :string, html5: true, label: 'Service ID', class: 'form-control mb-1', placeholder: 'Service ID' %>
+                <%= f.text_field :service_id, as: :string, html5: true, label: 'Service ID', class: 'form-control mb-1', placeholder: 'e.g.: JAD' %>
                 <%= f.label :vessel_id, 'Vessel ID:' %>
                 <%= f.text_field :vessel_id, as: :string, html5: true, label: 'Vessel ID', class: 'form-control mb-1', placeholder: 'Vessel ID' %>
-                <%= f.label :vessel_length, 'Vessel Length:' %>
-                <%= f.number_field :vessel_length, step: :any,as: :float, html5: true, label: 'Vessel Length', class: 'form-control mb-1', placeholder: 'Vessel Length' %>
+                <%= f.label :vessel_length, 'Vessel Length (m):' %>
+                <%= f.number_field :vessel_length, step: :any,as: :float, html5: true, label: 'Vessel Length', class: 'form-control mb-1', placeholder: 'e.g.: 300.0' %>
                 <%= f.label :total_container_moves, 'Total Container Move Count:' %>
-                <%= f.number_field :total_container_moves, as: :integer, html5: true, label: 'Total Container Move Count', class: 'form-control', placeholder: 'Total Container Move Count' %>
+                <%= f.number_field :total_container_moves, as: :integer, html5: true, label: 'Total Container Move Count', class: 'form-control', placeholder: 'e.g.: 1783' %>
               </div>
               <div class="col-lg-4">
-                <%= f.label :discharge_container_move_ratio, 'Discharge Container Move Ratio:' %>
-                <%= f.number_field :discharge_container_move_ratio, step: :any , as: :float, html5: true, label: 'Discharge Container Move Ratio', class: 'form-control mb-1', placeholder: 'Discharge Container Move Ratio' %>
+                <%= f.label :discharge_container_move_ratio, 'Discharge Container Moves:' %>
+                <%= f.number_field :discharge_container_move_ratio, step: :any , as: :float, html5: true, label: 'Discharge Container Moves', class: 'form-control mb-1', placeholder: 'e.g.: 756' %>
                 <%= f.label :crane_intensity, 'Planned Crane Intensity:' %>
-                <%= f.number_field :crane_intensity, step: :any , as: :float, html5: true, label: 'Planned Crane Intensity', class: 'form-control mb-1', placeholder: 'Planned Crane Intensity' %>
-                <%= f.label :berth_occupancy, 'Berth Occupancy:' %>
-                <%= f.number_field :berth_occupancy, step: :any , as: :float, html5: true, label: 'Berth Occupancy', class: 'form-control mb-1', placeholder: 'Berth Occupancy' %>
-                <%= f.label :yard_occupancy, 'Yard Occupancy:' %>
-                <%= f.number_field :yard_occupancy, step: :any, as: :float, html5: true, label: 'Yard Occupancy', class: 'form-control', placeholder: 'Yard Occupancy' %>
-                <%= f.submit 'Submit', class: 'btn btn-primary btn-block mt-4' %>
+                <%= f.number_field :crane_intensity, step: :any , as: :float, html5: true, label: 'Planned Crane Intensity', class: 'form-control mb-1', placeholder: 'e.g.: 4.2' %>
+                <%= f.label :berth_occupancy, 'Berth Occupancy (%):' %>
+                <%= f.number_field :berth_occupancy, step: :any , as: :float, html5: true, label: 'Berth Occupancy', class: 'form-control mb-1', placeholder: 'e.g.: 65' %>
+                <%= f.label :yard_occupancy, 'Yard Occupancy (%):' %>
+                <%= f.number_field :yard_occupancy, step: :any, as: :float, html5: true, label: 'Yard Occupancy', class: 'form-control', placeholder: 'e.g.: 70' %>
+                <%= f.submit 'Predict', class: 'btn btn-primary btn-block mt-4' %>
             </div>
           <% end %>
         </div>
