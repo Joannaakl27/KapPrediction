@@ -20,10 +20,12 @@
                 <%= f.text_field :vessel_id, as: :string, html5: true, label: 'Vessel ID', class: 'form-control mb-1', placeholder: 'Vessel ID' %>
                 <%= f.label :vessel_length, 'Vessel Length (m):' %>
                 <%= f.number_field :vessel_length, step: :any,as: :float, html5: true, label: 'Vessel Length', class: 'form-control mb-1', placeholder: 'e.g.: 300.0' %>
-                <%= f.label :total_container_moves, 'Total Container Move Count:' %>
-                <%= f.number_field :total_container_moves, as: :integer, html5: true, label: 'Total Container Move Count', class: 'form-control', placeholder: 'e.g.: 1783' %>
+                <%= f.label :eta, 'ETA:' %>
+                <%= f.datetime_field :eta, class: 'form-control' %>
               </div>
               <div class="col-lg-4">
+                <%= f.label :total_container_moves, 'Total Container Move Count:' %>
+                <%= f.number_field :total_container_moves, as: :integer, html5: true, label: 'Total Container Move Count', class: 'form-control', placeholder: 'e.g.: 1783' %>
                 <%= f.label :discharge_container_move_ratio, 'Discharge Container Moves:' %>
                 <%= f.number_field :discharge_container_move_ratio, step: :any , as: :float, html5: true, label: 'Discharge Container Moves', class: 'form-control mb-1', placeholder: 'e.g.: 756' %>
                 <%= f.label :crane_intensity, 'Planned Crane Intensity:' %>

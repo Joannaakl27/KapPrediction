@@ -1,13 +1,24 @@
 require 'json'
 require 'rest-client'
+require 'date'
+require 'gchart'
 
 class VesselVisitsController < ApplicationController
   def index
     if params[:query].present?
-      sql_query = "vessel_visits.voyage_number ILIKE :query"
+      sql_query = " \
+        vessel_visits.voyage_number ILIKE :query \
+        OR vessel_visits.vessel_id ILIKE :query \
+        "
       @vessel_visits = VesselVisit.where(sql_query, query: "%#{params[:query]}%")
     else
-      @vessel_visits = VesselVisit.all
+      @vessel_visits = VesselVisit.all.sort_by(&:eta)
+    end
+    @data_keys = []
+    @data_values = []
+    @vessel_visits.each do |vessel_visit|
+      @data_keys << vessel_visit.vessel_id
+      @data_values << [vessel_visit.eta.to_datetime, vessel_visit.etc.to_datetime]
     end
   end
 
@@ -63,7 +74,23 @@ class VesselVisitsController < ApplicationController
     headers = { 'Content-Type': 'application/json', 'Authorization': ('Bearer '+api_key) }
     response = RestClient::Request.execute(method: :post, url: url, payload: body, headers: headers)
     result = JSON.parse(response.body)
-    parameters = vessel_visit_params.merge({"estimated_cargo_operating_time": result["Results"].first.round(2)})
+    duration1 = vessel_visit_params[:eta].to_datetime.strftime('%s').to_f
+    duration2 = result["Results"].first * 3600
+    duration = (duration1 + duration2)
+    parameters = {
+                  "voyage_number": vessel_visit_params[:voyage_number],
+                  "service_id": vessel_visit_params[:service_id],
+                  "vessel_id": vessel_visit_params[:vessel_id],
+                  "vessel_length": vessel_visit_params[:vessel_length],
+                  "total_container_moves": vessel_visit_params[:total_container_moves],
+                  "discharge_container_move_ratio": vessel_visit_params[:discharge_container_move_ratio],
+                  "crane_intensity": vessel_visit_params[:crane_intensity],
+                  "berth_occupancy": vessel_visit_params[:berth_occupancy],
+                  "yard_occupancy": vessel_visit_params[:yard_occupancy],
+                  "estimated_cargo_operating_time": result["Results"].first.round(2),
+                  "eta": vessel_visit_params[:eta],
+                  "etc": DateTime.strptime(duration.to_s, '%s').strftime('%Y-%m-%d %H:%M')
+                }
     @vessel_visit = VesselVisit.create(parameters)
     @vessel_visit.save
     redirect_to vessel_visits_path
@@ -122,7 +149,23 @@ class VesselVisitsController < ApplicationController
     headers = { 'Content-Type': 'application/json', 'Authorization': ('Bearer '+api_key) }
     response = RestClient::Request.execute(method: :post, url: url, payload: body, headers: headers)
     result = JSON.parse(response.body)
-    parameters = vessel_visit_params.merge({"estimated_cargo_operating_time": result["Results"].first.round(2)})
+    duration1 = vessel_visit_params[:eta].to_datetime.strftime('%s').to_f
+    duration2 = result["Results"].first * 3600
+    duration = (duration1 + duration2)
+    parameters = {
+                  "voyage_number": vessel_visit_params[:voyage_number],
+                  "service_id": vessel_visit_params[:service_id],
+                  "vessel_id": vessel_visit_params[:vessel_id],
+                  "vessel_length": vessel_visit_params[:vessel_length],
+                  "total_container_moves": vessel_visit_params[:total_container_moves],
+                  "discharge_container_move_ratio": vessel_visit_params[:discharge_container_move_ratio],
+                  "crane_intensity": vessel_visit_params[:crane_intensity],
+                  "berth_occupancy": vessel_visit_params[:berth_occupancy],
+                  "yard_occupancy": vessel_visit_params[:yard_occupancy],
+                  "estimated_cargo_operating_time": result["Results"].first.round(2),
+                  "eta": vessel_visit_params[:eta].to_datetime.strftime('%Y-%m-%d %H:%M'),
+                  "etc": DateTime.strptime(duration.to_s, '%s').strftime('%Y-%m-%d %H:%M')
+                }
     @vessel_visit = VesselVisit.update(parameters)
     redirect_to vessel_visits_path
   end
@@ -136,6 +179,6 @@ class VesselVisitsController < ApplicationController
   private
 
   def vessel_visit_params
-    params.require(:vessel_visit).permit(:voyage_number, :service_id, :vessel_id, :vessel_length, :crane_intensity, :total_container_moves, :discharge_container_move_ratio, :berth_occupancy, :yard_occupancy)
+    params.require(:vessel_visit).permit(:voyage_number, :service_id, :vessel_id, :vessel_length, :crane_intensity, :total_container_moves, :discharge_container_move_ratio, :berth_occupancy, :yard_occupancy, :eta)
   end
 end

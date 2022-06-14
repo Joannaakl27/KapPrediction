@@ -1,13 +1,13 @@
 <div class="container my-5">
   <div class="shadow-4 rounded-5 overflow-hidden">
-    <div class="row">
-      <div class="col-lg-4 mb-4">
+    <div class="row p-2">
+      <div class="row">
+      <div class="col-lg-4 mt-4 mb-4">
         <%= form_tag vessel_visits_path, method: :get, class: "d-flex justify-content-between" do %>
             <%= text_field_tag :query,
                 params[:query],
                 class: "form-control",
-                placeholder: "Search for a Voyage ID",
-                label: "Voyage Number:"
+                placeholder: "Search for a vessel visit"
             %>
           <div class ="ml-2">
             <%= button_tag(type: "submit", class: "btn btn-primary") do %>
@@ -17,19 +17,20 @@
         <% end %>
       </div>
     </div>
-    <div class="row p-2">
-      <table class="col-lg-10 table align-middle mb-0 bg-white">
+      <table class="col-lg-10 table align-middle mb-0 bg-white mt-4" style="font-size: 0.775em;">
         <thead class="bg-light">
           <tr>
             <th>Voyage ID</th>
             <th>Service ID</th>
             <th>Vessel Length</th>
-            <th>Total Container Moves</th>
-            <th>Discharge Ratio</th>
+            <th>ETA</th>
+            <th>Container Moves</th>
+            <th>Discharge Moves</th>
             <th>Crane Intensity</th>
             <th>Berth Occupancy</th>
             <th>Yard Occupancy</th>
             <th>Cargo Ops. Time</th>
+            <th>ETC</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -39,12 +40,14 @@
               <td><%= vessel_visit.voyage_number %></td>
               <td><%= vessel_visit.service_id %></td>
               <td><%= vessel_visit.vessel_length %></td>
+              <td><%= vessel_visit.eta %></td>
               <td><%= vessel_visit.total_container_moves %></td>
               <td><%= vessel_visit.discharge_container_move_ratio %></td>
               <td><%= vessel_visit.crane_intensity %></td>
               <td><%= vessel_visit.berth_occupancy %></td>
               <td><%= vessel_visit.yard_occupancy %></td>
               <td><%= vessel_visit.estimated_cargo_operating_time%></td>
+              <td><%= vessel_visit.etc %></td>
               <td>
                 <%= link_to "Edit", edit_vessel_visit_path(vessel_visit) %>
                 <%= link_to "Delete", vessel_visit_path(vessel_visit), method: :delete, data: {confirm: "Are you sure?"} %>
