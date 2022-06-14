@@ -1,7 +1,6 @@
 require 'json'
 require 'rest-client'
 require 'date'
-require 'gchart'
 
 class VesselVisitsController < ApplicationController
   def index
