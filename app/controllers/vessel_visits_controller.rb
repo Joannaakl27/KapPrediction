@@ -13,12 +13,6 @@ class VesselVisitsController < ApplicationController
     else
       @vessel_visits = VesselVisit.all.sort_by(&:eta)
     end
-    @data_keys = []
-    @data_values = []
-    @vessel_visits.each do |vessel_visit|
-      @data_keys << vessel_visit.vessel_id
-      @data_values << [vessel_visit.eta.to_datetime, vessel_visit.etc.to_datetime]
-    end
   end
 
   def new
