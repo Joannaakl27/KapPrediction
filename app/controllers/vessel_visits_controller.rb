@@ -13,6 +13,19 @@ class VesselVisitsController < ApplicationController
     else
       @vessel_visits = VesselVisit.all.sort_by(&:eta)
     end
+    @data = []
+    @vessel_visits.each do |vessel_visit|
+      case vessel_visit.berth
+      when 1
+        @data << { label: vessel_visit.vessel_id, data: [[vessel_visit.eta.to_datetime, vessel_visit.etc.to_datetime], [DateTime.now, DateTime.now], [DateTime.now, DateTime.now], [DateTime.now, DateTime.now]], backgroundColor: "red"}
+      when 2
+        @data << { label: vessel_visit.vessel_id, data: [[DateTime.now, DateTime.now], [vessel_visit.eta.to_datetime, vessel_visit.etc.to_datetime], [ DateTime.now, DateTime.now], [DateTime.now, DateTime.now]], backgroundColor: "blue"}
+      when 3
+        @data << { label: vessel_visit.vessel_id, data: [[DateTime.now, DateTime.now], [DateTime.now, DateTime.now], [vessel_visit.eta.to_datetime, vessel_visit.etc.to_datetime], [DateTime.now, DateTime.now]], backgroundColor: "green"}
+      when 4
+        @data << { label: vessel_visit.vessel_id, data: [[DateTime.now, DateTime.now], [DateTime.now, DateTime.now], [DateTime.now, DateTime.now], [vessel_visit.eta.to_datetime, vessel_visit.etc.to_datetime]], backgroundColor: "yellow"}
+      end
+    end
   end
 
   def new
@@ -82,7 +95,8 @@ class VesselVisitsController < ApplicationController
                   "yard_occupancy": vessel_visit_params[:yard_occupancy],
                   "estimated_cargo_operating_time": result["Results"].first.round(2),
                   "eta": vessel_visit_params[:eta],
-                  "etc": DateTime.strptime(duration.to_s, '%s').strftime('%Y-%m-%d %H:%M')
+                  "etc": DateTime.strptime(duration.to_s, '%s').strftime('%Y-%m-%d %H:%M'),
+                  "berth": vessel_visit_params[:berth]
                 }
     @vessel_visit = VesselVisit.create(parameters)
     @vessel_visit.save
@@ -94,7 +108,6 @@ class VesselVisitsController < ApplicationController
   end
 
   def update
-    @vessel_visit = VesselVisit.find(params[:id])
     data = {
       "Inputs": {
         "data":
@@ -156,8 +169,9 @@ class VesselVisitsController < ApplicationController
                   "berth_occupancy": vessel_visit_params[:berth_occupancy],
                   "yard_occupancy": vessel_visit_params[:yard_occupancy],
                   "estimated_cargo_operating_time": result["Results"].first.round(2),
-                  "eta": vessel_visit_params[:eta].to_datetime.strftime('%Y-%m-%d %H:%M'),
-                  "etc": DateTime.strptime(duration.to_s, '%s').strftime('%Y-%m-%d %H:%M')
+                  "eta": vessel_visit_params[:eta],
+                  "etc": DateTime.strptime(duration.to_s, '%s').strftime('%Y-%m-%d %H:%M'),
+                  "berth": vessel_visit_params[:berth]
                 }
     @vessel_visit = VesselVisit.update(parameters)
     redirect_to vessel_visits_path
@@ -172,6 +186,6 @@ class VesselVisitsController < ApplicationController
   private
 
   def vessel_visit_params
-    params.require(:vessel_visit).permit(:voyage_number, :service_id, :vessel_id, :vessel_length, :crane_intensity, :total_container_moves, :discharge_container_move_ratio, :berth_occupancy, :yard_occupancy, :eta)
+    params.require(:vessel_visit).permit(:voyage_number, :service_id, :vessel_id, :vessel_length, :crane_intensity, :total_container_moves, :discharge_container_move_ratio, :berth_occupancy, :yard_occupancy, :eta, :berth)
   end
 end

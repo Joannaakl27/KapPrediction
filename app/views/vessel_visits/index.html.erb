@@ -1,6 +1,9 @@
 <div class="container my-5">
   <div class="shadow-4 rounded-5 overflow-hidden">
     <div class="row p-2">
+      <div class="chart-view">
+        <canvas id="chart" width="600" height="200">
+      </div>
       <div class="row">
       <div class="col-lg-4 mt-4 mb-4">
         <%= form_tag vessel_visits_path, method: :get, class: "d-flex justify-content-between" do %>

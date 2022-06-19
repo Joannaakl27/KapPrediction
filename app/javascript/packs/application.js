@@ -13,15 +13,15 @@ Turbolinks.start()
 ActiveStorage.start()
 
 import "bootstrap";
-//import "chart.js";
-//import Chart from 'chart.js/auto';
-//import 'chartjs-adapter-date-fns';
+import "chart.js";
+import { Chart } from 'chart.js';
+import 'chartjs-adapter-luxon';
 
-//import { initChart } from '../components/chart';
+import { initChart } from '../components/chart';
 
-//document.addEventListener('turbolinks:load', () => {
-  // Call your functions here, e.g:
+document.addEventListener('turbolinks:load', () => {
+  //Call your functions here, e.g:
   // initSelect2();
 
-//  initChart();
-//});
+  initChart();
+});
